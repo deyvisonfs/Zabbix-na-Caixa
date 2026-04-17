@@ -3,7 +3,7 @@ Este projeto demonstra a implementação de uma infraestrutura de monitoramento 
 
 Zabbix de Pregioçoso!
 
-#Preparação da VM no Proxmox
+1. Preparação da VM no Proxmox
 Antes do Docker, você precisa da "casa" (a VM).
 
 No seu Proxmox, clique em Create VM.
@@ -20,39 +20,47 @@ Rede: Modo Bridge (para a VM ter um IP próprio na sua rede).
 
 Instale o Debian 12 Server (instalação padrão, sem interface gráfica, apenas "SSH Server" e "Standard System Utilities").
 
-#Passo a Passo no Terminal do Debian
+2. Passo a Passo no Terminal do Debian
 Após logar no seu Debian via terminal ou console do Proxmox:
 
 A. Instalar o Docker
-Bash
+```Bash
 sudo apt update && sudo apt upgrade -y
 curl -fsSL https://get.docker.com | sh
 sudo usermod -aG docker $USER
 # SAIA DO TERMINAL (EXIT) E ENTRE DE NOVO PARA AS PERMISSÕES VALEREM
+```
+
 B. Criar a estrutura de arquivos
-Bash
+```Bash
 cd ~
 mkdir zabbix-monitor && cd zabbix-monitor
-C. Criar o arquivo de senhas (.env)
-Bash
-nano .env
-Copie e cole o conteúdo abaixo:
+```
 
-Snippet de código
-# --- SENHAS DO BANCO DE DADOS (Mude as senhas após o '=') ---
+C. Criar o arquivo de senhas (.env)
+```Bash
+nano .env
+```
+
+Copie e cole o conteúdo abaixo:
+```Bash
+# SENHAS DO BANCO DE DADOS
 MYSQL_DATABASE=zabbix
 MYSQL_USER=zabbix
-MYSQL_PASSWORD=senha_do_usuario_zabbix   <-- MUDAR AQUI
-MYSQL_ROOT_PASSWORD=senha_mestra_banco    <-- MUDAR AQUI
+MYSQL_PASSWORD=senha_do_usuario_zabbix
+MYSQL_ROOT_PASSWORD=senha_mestra_banco
 
-# --- CONFIGURAÇÃO DO SISTEMA ---
+# CONFIGURAÇÃO DO SISTEMA
 PHP_TZ=America/Recife
-D. Criar o arquivo do servidor (docker-compose.yml)
-Bash
-nano docker-compose.yml
-Copie e cole o código abaixo (Não precisa mudar IPs aqui, o Docker resolve nomes):
+```
 
-YAML
+D. Criar o arquivo do servidor (docker-compose.yml)
+```Bash
+nano docker-compose.yml
+```
+
+Copie e cole o código abaixo (Não precisa mudar IPs aqui, o Docker resolve nomes):
+```YAML
 services:
   zabbix-db:
     image: mariadb:10.11
@@ -90,17 +98,19 @@ services:
     volumes:
       - ./grafana_data:/var/lib/grafana
     restart: always
-Para subir tudo: docker compose up -d
+```
 
-#Configurando o Zabbix Agent (Em outra máquina/VM)
+Para subir tudo: ```docker compose up -d```
+
+3. Configurando o Zabbix Agent (Em outra máquina/VM)
 Para monitorar outra máquina, você cria um arquivo separado nela:
-
-Bash
+```Bash
 mkdir zabbix-agent && cd zabbix-agent
 nano docker-compose.yml
 Código do Agent (Atenção aos comentários):
-
-YAML
+```
+Código do Agent (Atenção aos comentários):
+```YAML
 services:
   zabbix-agent:
     image: zabbix/zabbix-agent2:latest
@@ -114,8 +124,9 @@ services:
       # NOME QUE VAI APARECER NO PAINEL DO ZABBIX
       - ZBX_HOSTNAME=Servidor-Proxmox-01
     restart: always
+```
 
-#Integração Passo a Passo (Zabbix + Grafana)
+4. Integração Passo a Passo (Zabbix + Grafana)
 Agora, com tudo rodando, vamos fazer os dois conversarem:
 
 No Zabbix (http://IP:8080):
