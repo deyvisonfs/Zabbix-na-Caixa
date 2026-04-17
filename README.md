@@ -79,17 +79,27 @@ services:
     image: zabbix/zabbix-web-apache-mysql:ubuntu-6.4-latest
     container_name: zabbix-web
     ports:
-      - "8080:8080" # Porta para acessar o Zabbix no navegador
+      - "8080:8080"
     env_file: .env
     depends_on:
       - zabbix-db
+    restart: always
+
+  zabbix-agent:
+    image: zabbix/zabbix-agent2:latest
+    container_name: zabbix-agent-self
+    privileged: true
+    network_mode: host # IMPORTANTE: permite monitorar o host real onde o Docker está
+    environment:
+      - ZBX_SERVER_HOST=127.0.0.1
+      - ZBX_HOSTNAME=Zabbix-Server-Principal
     restart: always
 
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
     ports:
-      - "3000:3000" # Porta para acessar o Grafana no navegador
+      - "3000:3000"
     volumes:
       - ./grafana_data:/var/lib/grafana
     restart: always
@@ -99,6 +109,23 @@ Para subir tudo:
 ```Bash
 docker compose up -d
 ```
+
+Passo Final no Painel do Zabbix:
+Depois de dar o docker compose up -d, você precisa ativar o monitoramento no navegador:
+
+No Zabbix (http://IP:8080):
+
+Vá em Data Collection -> Hosts.
+
+Você verá um host chamado "Zabbix server" que já vem criado por padrão.
+
+Clique nele e mude o Interfaces -> IP address para 127.0.0.1.
+
+Certifique-se que o Template Linux by Zabbix agent está selecionado.
+
+Clique em Update.
+
+
 
 Como conferir se deu certo?
 Digite:
