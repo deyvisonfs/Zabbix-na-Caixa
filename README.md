@@ -1,8 +1,7 @@
 # Monitoramento-com-Zabbix-Grafana-e-Docker-no-Proxmox
 Este projeto demonstra a implementação de uma infraestrutura de monitoramento completa, utilizando Docker Compose sobre uma instância Debian Server virtualizada em um ambiente Proxmox VE.
 
-> **Nota:** Guia prático focado em iniciantes que desejam rapidez e organização.
-
+> **Nota:** Passo a passo completo para a criação de uma infraestrutura de monitoramento orquestrada por containers. Desenvolvido para rodar tanto em servidores Debian puros quanto em ambientes de alta disponibilidade como Proxmox VE.
 
 ## ***1. Preparação da VM no Proxmox***
 
