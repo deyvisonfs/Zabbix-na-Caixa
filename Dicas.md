@@ -1,6 +1,16 @@
 ## ***Solução de Problemas e Dicas de Manutenção***
 Este documento serve como um guia rápido para resolver erros comuns e realizar manutenções preventivas no ambiente de monitoramento Zabbix + Grafana. Se você encontrar comportamentos inesperados durante a instalação ou atualização, consulte os tópicos abaixo.
 
+o Debian, por padrão, o comando sudo pode não vir instalado ou o seu usuário pode não estar na lista de "administradores" (sudoers).
+
+e você estiver recebendo erros de "Permissão negada" ou "comando não encontrado", o jeito mais fácil de resolver durante a instalação é virar o superusuário root:
+
+No terminal, digite:
+```Bash
+su -
+```
+E coloque a senha do root (aquela que você definiu na instalação da VM).
+
 
 
 A alternativa para não precisar sair (Logoff):
