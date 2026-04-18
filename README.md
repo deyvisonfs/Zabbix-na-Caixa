@@ -47,7 +47,7 @@ MYSQL_PASSWORD=zabbix             # Alterado para facilitar
 MYSQL_ROOT_PASSWORD=zabbix_lab    # Uma senha mestra diferente é recomendável
 
 # CONFIGURAÇÃO DO SISTEMA
-PHP_TZ=America/Recife
+PHP_TZ=America/Recife             # Coloque sua capital ou normalmente New York o padrão
 ```
 
 D. Criar o arquivo do servidor (docker-compose.yml)
