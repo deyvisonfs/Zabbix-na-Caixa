@@ -45,6 +45,7 @@ MYSQL_DATABASE=zabbix
 MYSQL_USER=zabbix
 MYSQL_PASSWORD=zabbix             # Alterado para facilitar
 MYSQL_ROOT_PASSWORD=zabbix_lab    # Uma senha mestra diferente é recomendável
+DB_SERVER_HOST=zabbix-db
 
 # CONFIGURAÇÃO DO SISTEMA
 PHP_TZ=America/Recife             # Coloque sua capital ou normalmente New York o padrão
@@ -71,7 +72,11 @@ services:
     container_name: zabbix-server
     ports:
       - "10051:10051"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     env_file: .env
+    environment:
+      - ZBX_DBHOST=zabbix-db # Nome do container do banco
     depends_on:
       - zabbix-db
     restart: always
@@ -80,8 +85,13 @@ services:
     image: zabbix/zabbix-web-apache-mysql:ubuntu-6.4-latest
     container_name: zabbix-web
     ports:
-      - "8080:8080"
+      - "80:8080" # Mudei para 80 para você acessar só pelo IP no navegador
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     env_file: .env
+    environment:
+      - ZBX_DBHOST=zabbix-db
+      - ZBX_SERVER_HOST=zabbix-server
     depends_on:
       - zabbix-db
     restart: always
