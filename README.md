@@ -43,8 +43,8 @@ Copie e cole o conteúdo abaixo:
 # SENHAS DO BANCO DE DADOS
 MYSQL_DATABASE=zabbix
 MYSQL_USER=zabbix
-MYSQL_PASSWORD=senha_do_usuario_zabbix
-MYSQL_ROOT_PASSWORD=senha_mestra_banco
+MYSQL_PASSWORD=zabbix             # Alterado para facilitar
+MYSQL_ROOT_PASSWORD=zabbix_lab    # Uma senha mestra diferente é recomendável
 
 # CONFIGURAÇÃO DO SISTEMA
 PHP_TZ=America/Recife
