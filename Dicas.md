@@ -90,3 +90,7 @@ ufw allow 80/tcp    # Porta do Zabbix Web
 ufw allow 3000/tcp  # Porta do Grafana
 ufw allow 10051/tcp # Porta do Zabbix Server
 ```
+
+
+⚠️ Importante: Permissão de Grupo no Zabbix
+Não basta o utilizador estar ativo. O User Group associado ao utilizador da API deve ter o Frontend access configurado como System default ou Internal. Se estiver como Disabled, o Grafana não conseguirá autenticar, mesmo com a senha correta.
